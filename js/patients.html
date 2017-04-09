@@ -1,0 +1,86 @@
+<!doctype html> 
+<html lang="en">
+<head>
+<meta charset='utf-8'>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telphone=no, email=no"/>
+ <title>曙光医生</title>
+ <link rel="stylesheet" href="style.css" type='text/css'>
+ <script type='text/javascript' src='jquery-1.10.1.min.js'></script>
+ <script src='data.js'></script>
+ <script src='scroll.js'></script>
+ <script>
+ $(function(){
+
+  $('.phone').on('mousedown',function(){return false;});
+ 	
+  for(var i=0;i<patients_data.length;i++){
+  		var oLi=$('<li></li>'); oLi.appendTo( $('#patients_list').find('ul') );
+  		
+  		var oDiv1=$('<div></div>'),oImg_head=$('<img/>'); oDiv1.appendTo(oLi); 
+  		oImg_head.attr('src','../img/04_user_pic.png').appendTo(oDiv1); 
+  		
+
+  		var oDiv2=$('<div></div>');oDiv2.appendTo(oLi);
+  		var oDiv_detail=$('<div></div>');oDiv_detail.appendTo(oDiv2);
+  		var oSpan_name=$('<span></span>'),oSpan_hospital=$('<span></span>'),oSpan_type=$('<span></span>'),oSpan_sex=$('<span></span>'),oSpan_age=$('<span></span>');
+  		oSpan_name.attr('class','name').html(patients_data[i].name).appendTo(oDiv_detail);
+  		if(patients_data[i].hospital=='东'){ oSpan_hospital.attr('class','hospital_east'); } else{ oSpan_hospital.attr('class','hospital_west'); }
+  		oSpan_hospital.html(patients_data[i].hospital).appendTo(oDiv_detail);
+  		if(patients_data[i].type=='住院'){ oSpan_type.attr('class','hospitalization'); } else{ oSpan_type.attr('class','outpatient'); }
+  		oSpan_type.html(patients_data[i].type).appendTo(oDiv_detail);
+  		oSpan_sex.attr('class','sex').html(patients_data[i].sex).appendTo(oDiv_detail);
+  		oSpan_age.attr('class','age').html(patients_data[i].age).appendTo(oDiv_detail);
+  		
+  		var oDiv_disease=$('<div></div>');oDiv_disease.appendTo(oDiv2);
+  		var oSpan_department=$('<span></span>'),oSpan_description=$('<span></span>');
+  		oSpan_department.attr('class','department').html(patients_data[i].department).appendTo(oDiv_disease);
+  		oSpan_description.attr('class','description').html(patients_data[i].description).appendTo(oDiv_disease);
+  		if(oSpan_description.height()>40){oSpan_description.get(0).style.lineHeight='18px';}
+  		
+  		
+  		var oImg=$('<img/>'); oImg.attr('src','../img/00_grey.png').appendTo(oLi);
+  	}
+ 	
+ 	barScroll($('.bar').get(0),$('.barParent').get(0),$('#patients_list').find('ul').get(0),$('.refresh').get(0),1);
+ });
+ </script>
+</head>
+
+<body>
+<ol class='readme'>
+  <h4>demo说明：</h4><br/>
+  <li>本文件为手机demo的PC版，包含完整的手机模型框。</li><br/>
+  <li>使用mouse事件代替touch事件，通过鼠标代替手指在界面中滑动。</li><br/>
+  <li>demo制作了5个页面，包括“主页”、“日程”、“消息”、“我的”和"患者管理"。</li><br/>
+  <li>主页的banner图是轮播图，可滑动切换；消息列表下拉可模拟刷新，下滑滚动页面。</li><br/>
+  <li>建议使用Chrome、Firefox浏览器获得更好的使用体验。</li><br/>
+  <li>使用IE浏览器需要点击弹出框中的按钮“允许阻止的内容”。</li>
+</ol>
+<div class='phone'>
+  <div class='statusBar'></div>
+  <div class='frame'>
+    <div id='patients'>
+      <div class='nav'><a href="../index.html"><img src="../img/01_back.png"></a><span>患者管理</span></div>
+      <div class='main'>
+        <ul id='function'>
+          <li><div><img src="../img/05_patients_icon1.png"></div><span>我的预约</span></li>
+          <li><div><img src="../img/05_patients_icon2.png"></div><span>我的门诊</span></li>
+          <li><div><img src="../img/05_patients_icon3.png"></div><span>我的住院</span></li>
+        </ul>
+        <div id='care'>
+          <div><img src="../img/05_patients_icon4.png"><span>我的关注</span></div>
+          <div id='patients_list'>
+            <div class='barParent'><div class='bar'></div></div>
+            <ul>
+              <div class='refresh'><img src="../img/00_refresh.png"><p>下拉刷新</p></div> 
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

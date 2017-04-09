@@ -1,0 +1,204 @@
+﻿<!doctype html> 
+<html lang="en">
+<head>
+<meta charset='utf-8'>
+ <title>曙光医生</title>
+ <link rel="stylesheet" href="js/style.css" type='text/css'>
+ <script type='text/javascript' src='js/jquery-1.10.1.min.js'></script>
+ <script src='js/data.js'></script>
+ <script src='js/scroll.js'></script>
+ <script>
+ window.onload=function(){ 	
+  	$('.phone').on('mousedown',function(){return false;});
+  	// ------ 消息页加载和滚动 ↓↓↓ ------
+  	for(var i=0;i<message_data.length;i++){
+  		var oLi=$('<li></li>');oLi.attr('class','ms').appendTo( $('#message_list') );
+  		
+  		var oP1=$('<p></p>'),oImg=$('<img/>'),oSpan_type=$('<span></span>'),oSpan_time=$('<span></span>');
+  		if(message_data[i].type=='会诊消息'){ oImg.attr('src','img/03_message_icon.png').appendTo(oP1); }
+  		oSpan_type.html(message_data[i].type).appendTo(oP1); oSpan_time.html(message_data[i].time).appendTo(oP1); 
+  		oP1.appendTo(oLi); 
+
+  		var oP2=$('<p></p>'),oSpan_content=$('<span></span>');
+  		oSpan_content.html(message_data[i].content).appendTo(oP2);
+  		oP2.appendTo(oLi);
+
+  		var oP3=$('<p></p>'),oSpan_status=$('<span></span>'),oSpan_more=$('<span></span>');
+  		oSpan_status.html(message_data[i].status).appendTo(oP3);oSpan_more.html(message_data[i].more).appendTo(oP3);
+  		oP3.appendTo(oLi);
+  	}
+  	barScroll($('.bar').get(0),$('.barParent').get(0),$('#message_list').get(0),$('.refresh').get(0),0);
+  	
+  	// ------ 显示主页 ↓↓↓ ------
+  	$('.page').not('#index').css('display','none');
+  	$('#patientsBox').hover(function(){ $(this).css('opacity',0.8); },function(){ $(this).css('opacity',1); });
+
+	// ------ Tab栏翻页 ↓↓↓ ------
+  	var n=0;
+  	var arrGrey=['img/01_tab_icon10.png','img/01_tab_icon20.png','img/01_tab_icon30.png','img/01_tab_icon40.png'];
+  	var arrOn=['img/01_tab_icon1.png','img/01_tab_icon2.png','img/01_tab_icon3.png','img/01_tab_icon4.png'];
+  	
+  	$('.btnTab').hover(function(){ $(this).css('opacity',0.7); },function(){ $(this).css('opacity',1); });
+  	$('.btnTab').click(function(){
+  		$('.loading').css('display','none');$('.reload').css('display','none');
+  		$('.page').eq(n).css('display','none');
+  		$('#tab').find('div').eq(n).find('img').attr('src',arrGrey[n]); $('#tab').find('div').eq(n).find('p').css('color','#222');
+  		n=$(this).index();
+  		$('.page').eq(n).css('display','block');
+  		$(this).find('img').attr('src',arrOn[n]); $(this).find('p').css('color','#01a5d4');
+  	});
+  	
+  	// ------ 日历页网络不佳加载动效 ↓↓↓ ------
+  	$('#tab').find('div').eq(1).click(function(){
+  		$('.loading').css('display','block');setTimeout(function(){ $('.reload').css('display','block'); },500);
+  		$('.reBtn').click(function(){
+  			$('.reload').css('display','none');setTimeout(function(){ $('.loading').css('display','none'); },1000);
+  		});
+  	});
+
+  	// ------ banner自动滚及手动滚 ↓↓↓ ------
+  	var arrBanner=["img/01_index_banner1.JPG","img/01_index_banner2.JPG"];
+  	var bannerBox=$('#banner').find('div');
+  	var tm=null;
+  	
+  	bannerBox.width(375*arrBanner.length);
+  	clearInterval(tm); tm=setInterval(bannerStyle,5000);
+  	
+  	bannerBox.get(0).ontouchstart=function(ev){
+  		var touch=ev.changedTouches[0];
+  		var disX=touch.pageX,disL=$(this).position().left;
+  		var onoff=true;
+  		var downTime=Date.now();
+  
+  		clearInterval(tm);clearInterval(this.timer);
+  		if(this.setCapture){this.setCapture();}
+  		var _this=this;
+
+  		document.ontouchmove=function(ev){
+  			var touch=ev.changedTouches[0];
+
+			if(touch.pageX<disX){
+				bannerBox.css('left',touch.pageX-disX+disL);
+			}else{
+				if(onoff){ onoff=false;bannerBox.find('img').eq(1).prependTo(bannerBox); }
+				bannerBox.css('left',touch.pageX-disX+disL-375);
+			}
+  		}
+  		document.ontouchend=function(ev){
+  			var touch=ev.changedTouches[0];
+  			document.ontouchmove=null;document.ontouchend=null;if(_this.releaseCapture){_this.releaseCapture();}
+  			
+  			if(touch.pageX<disX){
+  				if( disX-touch.pageX > $('#banner').width()/2 || Date.now()-downTime < 300 && disX-touch.pageX > 30 ){
+  					bannerStyle(); 
+  				}else{ startMove(bannerBox.get(0),{left:'0'},300,'easeIn'); }
+  			}else{
+  				if( touch.pageX-disX > $('#banner').width()/2 || Date.now()-downTime < 300 && touch.pageX-disX > 30 ){
+  					startMove(bannerBox.get(0),{left:'0'},300,'easeIn'); 
+  				}else{ bannerStyle(); }
+  			}
+  			clearInterval(tm);tm=setInterval(bannerStyle,5000);
+  		}
+  		return false;
+  	}
+  	function bannerStyle(){
+  		startMove(bannerBox.get(0),{left:'-375'},300,'linear',function(){  bannerBox.find('img').eq(0).appendTo(bannerBox);bannerBox.css('left','0'); });
+  	}
+ }
+ </script>
+</head>
+
+<body>
+<ol class='readme'>
+	<h4>demo说明：</h4><br/>
+	<li>本文件为手机demo的pad版，包含完整的手机模型框。</li><br/>
+	<li>demo制作了5个页面，包括“主页”、“日程”、“消息”、“我的”和"患者管理"。</li><br/>
+	<li>主页的banner图是轮播图，可滑动切换；消息列表下拉可模拟刷新，下滑滚动页面。</li><br/>
+</ol>
+<div class='phone'>
+	<div class='statusBar'></div>
+	<div class='frame'>
+		
+		<!-- 主页 ↓↓↓ -->
+	    <div id='index' class='page'>
+			<div class='nav'><img src="img/01_index_SG.png"></div>
+			<div class='main'>
+				<div id='banner'><div><img src="img/01_index_banner1.JPG"><img src="img/01_index_banner2.JPG"></div></div>
+				<div id='view1'>
+					<div><img src="img/01_view101.png"><span>院内通知</span></div>
+					<div><img src="img/01_view102.png"><span>员工直通车</span></div>
+				</div>
+				<div id='view2'>
+					<div id='patientsBox'><a href="js/patients.html"><img src="img/01_view200.png"><br/><span>患者管理</span></a></div>
+					<div>
+						<div><img src="img/01_view201.png"><span>门诊排班</span></div>
+						<div><img src="img/01_view202.png"><span>移动决策</span></div>
+						<div><img src="img/01_view203.png"><span>手术排班</span></div>
+						<div><img src="img/01_view204.png"><span>会诊管理</span></div>
+					</div>
+				</div>
+				<div id='view3'>
+					<div><img src="img/01_view300.png"><br/><span>医学公式</span></div>
+					<div>
+						<div><img src="img/01_view301.png"><span>危&nbsp急&nbsp值</span></div>
+						<div><img src="img/01_view302.png"><span>医学资讯</span></div>
+						<div><img src="img/01_view303.png"><span>先进评选</span></div>
+						<div><img src="img/01_view304.png"><span>通&nbsp讯&nbsp录</span></div>
+					</div>
+				</div>
+			</div>
+		</div> 
+		
+		<!-- 日程页面 ↓↓↓ -->
+		<div id='calendar' class='page' style='display:none'>
+			<div class='nav'><span>日程</span></div>
+			<div class='loading'><img src="img/00_loading2.gif"></div>
+			<div class='reload'>
+				<div>
+					<img src=""><p>网络连接失败</p> <div class='reBtn'>重新加载</div>
+				</div>
+			</div>
+			<div class='main'><span>暂无日程</span></div>
+		</div>
+		
+		<!-- 消息页面 ↓↓↓ -->
+		<div id='message' class='page'>
+			<div class='nav'><span>消息</span><span>0条未读</span></div>
+			<div class='main'>
+				<div class='barParent'><div class='bar'></div></div>
+				<ul id='message_list'> 
+					<div class='refresh'><img src="img/00_refresh.png"><p>下拉刷新</p></div> 
+				</ul>		
+			</div>
+		</div> 
+		
+		<!-- 我的页面 ↓↓↓ -->
+		<div id='user' class='page' style='display:none'>
+			<div class='nav'><span>我的</span></div>
+			<div class='main'>
+				<div id='pic'>
+					<img src="img/04_user_pic.png">
+					<p><span>工号：</span><span>8888</span></p>
+					<p><span>姓名：</span><span>主任医生</span></p>
+				</div>
+				<div id='set'>
+					<div><div><img src="img/04_user_icon1.png"></div><span>修改手势密码</span><img src="img/00_blue.png"></div>
+					<div><div><img src="img/04_user_icon2.png"></div><span>修改登陆密码</span><img src="img/00_blue.png"></div>
+					<div><div><img src="img/04_user_icon3.png"></div><span>检查版本更新</span><img src="img/00_blue.png"></div>
+				</div>
+				<div id='exit'><span>退出登录</span></div>
+			</div>
+		</div>
+		
+		<!-- Tab栏 ↓↓↓  -->
+		<div id='tab'>
+			<div class='btnTab'> <img src="img/01_tab_icon1.png"><p>首页</p> </div>
+			<div class='btnTab'> <img src="img/01_tab_icon20.png"><p>日程</p> </div>
+			<div class='btnTab'> <img src="img/01_tab_icon30.png"><p>消息</p> </div>
+			<div class='btnTab'> <img src="img/01_tab_icon40.png"><p>我的</p> </div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

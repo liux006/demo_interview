@@ -1,0 +1,174 @@
+@keyframes arrowRotate{ from{transform:rotate(0deg);} to{transform:rotate(-180deg);} }
+@keyframes backwordsRotate{ from{transform:rotate(-180deg);} to{transform:rotate(0deg);} }
+*{margin:0;padding: 0;}
+ body{background: #f0f0f0;}
+ a{text-decoration: none;color:#222;}
+ p,span{font-family:'黑体';color:#222;}
+ ul{list-style: none;}
+
+/*demo说明 ↓↓↓ */ 
+ .readme{position:absolute;top:130px;left:450px;border:2px solid #888;padding:20px 10px 20px 32px;width:225px;}
+ .readme h4{margin-left: -15px;font-size: 17px;}
+
+/*网络不佳动画样式 ↓↓↓ */ 
+ .loading,.reload{width:375px;height:554px;position:absolute;top:50px;left:0;background: #f0f0f0;text-align: center;display: none;}
+ .loading{line-height: 554px;z-index:15;}
+ .loading img{width:30px;}
+ .reload{z-index:20;}
+ .reload>div{width:120px;margin:150px auto;}
+ .reload>div>img{width:80px;height:80px;background: #ddd;}
+ .reload>div>p{margin: 10px auto;color:#666;line-height: 16px;font-size: 14px;}
+ .reload .reBtn{padding:4px 20px;border:1px solid #666;color:#444;border-radius:4px;width:70px;margin:20px auto;font-weight:200;font-size: 15px;cursor:pointer;}
+ .reload .reBtn:hover{opacity: 0.7;}
+
+/*滚动条样式 ↓↓↓ */ 
+ .barParent{position: absolute;top:2px;width:8px;right:0;z-index: 5;}
+ .bar{width:2px;border-radius:2px;background:black;position: absolute;right:3px;top:0;display: none;}
+
+/*模拟刷新动画样式 ↓↓↓ */ 
+ .refresh{position: absolute;top:-30px;width:100%;height:16px;}
+ .refresh>img{position: absolute;height:16px;left:150px;}
+ .refresh>p{position: absolute;height:16px;line-height:16px;font-size: 13px;font-weight: 300;left:180px;color:#444;}
+ 
+/*手机背景样式 ↓↓↓ */
+ .phone{width:435px;height:888px;background: url(../img/phone1.png) no-repeat;background-size:435px;position: absolute;left:5px;top:5px;}
+ .statusBar{width:375px;height:20px;background: url(../img/statusBar.png) no-repeat;position: absolute;top:109px;left:30px;}
+
+/*框架样式 ↓↓↓ */
+ .frame{width:375px;height:647px;background:#f0f0f0;position:absolute;top:129px;left:30px;}
+ #index,#calendar,#message,#user{position: absolute;left:0;top:0;width:375px;height:598px;overflow: hidden;}
+ .main{position: absolute;left:0;top:45px;width:100%;height:554px;}
+/* #index{display:none;}*/
+/* #calendar{display:none;}
+ #message{display:none;} 
+ #user{display:none;}*/
+
+/*导航栏样式 ↓↓↓ */
+ .nav,#tab{width:100%;background: white;position:absolute;left:0;}
+ .nav{height:44px;top:0;text-align: center;line-height: 44px;z-index:3;font-size:19px;letter-spacing:2px;border-bottom: 1px solid #e3e3e3;font-weight:400;}
+ #index .nav{border-bottom: 1px solid #fff;}
+ #index .nav img{height:25px;vertical-align: middle;}
+ #message .nav>span:last-child{position:absolute;right:5px;font-size:16px;letter-spacing:0px;}
+ 
+/*主页样式 ↓↓↓ */
+ #banner,#view1,#view2,#view3{width:100%;background: white;position: absolute;left:0;}
+ #banner{height:139px;top:0;border-bottom: 1px solid #e3e3e3;overflow: hidden;cursor: pointer;}
+ #banner>div{height:139px;position:absolute;top:0;left:0;}
+ #banner img{width:375px;}
+ 
+ #view1,#view2,#view3{border-top:1px solid #e3e3e3;border-bottom:1px solid #e3e3e3;background:#e3e3e3;}
+ #view1 span,#view2 span,#view3 span,#tab p{font-family:'黑体';font-size:18px;color:#222;}
+ #view1 span{margin-left:12px;}
+ #view1{top:150px;height:80px;}
+ #view1 div{height:80px;background:white;position: absolute;top:0;line-height: 80px;}
+ #view1 div img{height:44px;vertical-align: middle;margin-left:15px;}
+ #view1 div:first-child img{height:50px;margin-left: 25px;margin-right: 5px;}
+ #view1 div:first-child{width:187px;left:0;}
+ #view1 div:last-child{width:187px;right:0;}
+ 
+ #view2{top:242px;height:141px;}
+ #view3{top:395px;height:141px;}
+ #view2>div,#view3>div{height:141px;position:absolute;top:0;}
+ #view2>div:first-child,#view3>div:first-child{background: white;width:111px;left:0;text-align:center;}
+ #view2>div:last-child,#view3>div:last-child{right:0;width:264px;}
+ #view2>div:last-child div,#view3>div:last-child div{background: white;width:131px;height:70px;float:left;margin-left:1px;line-height: 70px;}
+ #view2>div:last-child div:first-child,#view2>div:last-child div:nth-child(2),#view3>div:last-child div:first-child,#view3>div:last-child div:nth-child(2){margin-bottom: 1px;}
+ /*view2,view3的白底样式 ↑↑ */
+ #view2>div:first-child img{width:70px;margin-top:15px;margin-bottom:10px;}
+ #view3>div:first-child img{width:78px;margin-top:32px;margin-bottom:24px;}
+ #view2>div:first-child span,#view3>div:first-child span{font-size:16px;margin:auto;}
+ #view2>div:last-child img,#view3>div:last-child img{height:32px;margin-left:10px;vertical-align: middle;}
+ #view2>div:last-child div:nth-child(1) img{height:42px;margin-left:14px;}
+ #view2>div:last-child div:nth-child(3) img{height:27px;margin-left:5px;}
+ #view2>div:last-child div:nth-child(4) img{height:34px;}
+ #view3>div:last-child div:nth-child(2) img,#view3>div:last-child div:nth-child(3) img{height:34px;}
+ #view2>div:last-child span,#view3>div:last-child span{font-size:16px;float:right;margin-right:10px;}  
+
+/*日程页面样式 ↓↓↓ */
+ #calendar .main{text-align: center;}
+ #calendar .main span{font-size:36px;color:#ccc;font-weight:200;display: block;margin-top:180px;}
+
+/*消息页面样式 ↓↓↓ */ 
+ #message .main{text-align:center;}
+ #message .barParent{height:549px;}
+ #message_list{width:100%;position: absolute;top:0;}
+ .ms{width:350px;height:132px;background: white;border-radius:10px;margin:0 auto;margin-top:15px;line-height: 30px;border:1px solid #e3e3e3;}
+ .ms p{width:330px;height:44px;margin:0 auto;text-align:left;border-bottom: 1px solid #e3e3e3;line-height: 44px;position: relative;}
+ .ms p:last-child{border-bottom: none;}
+ .ms img{height:22px;vertical-align: middle;margin-left:5px;}
+ .ms p:first-child span{vertical-align: sub;}
+ .ms p:first-child>span:nth-child(2){color:#01a5d4;font-size:17px;font-weight:400;margin-left:7px;}
+ .ms p:first-child>span:nth-child(3),.ms p:last-child span:last-child{color:#555;position:absolute;right: 5px;font-size:15px;font-weight:300;}
+ .ms p:nth-child(2)>span{font-size:16px;font-weight:300;margin-left:5px;color:#000;}
+ .ms p:last-child span:first-child,.ms p:last-child span:last-child{color:#01a5d4;font-size:16px;font-weight:300;margin-left:5px; }  
+
+/*我的页面样式 ↓↓↓ */ 
+ #pic,#set,#exit{width:100%;background:#e3e3e3;border-top:1px solid #e3e3e3;border-bottom:1px solid #e3e3e3;margin-bottom: 10px;}
+ #pic{height:160px;background: white;text-align: center;border-top:none;}
+ #pic img{height:80px;margin-top:12px;margin-bottom:4px;}
+ #pic p{text-align: left;width:120px;margin:0 auto;}
+ #pic p span:first-child{font-size:15px;font-weight: 400;color:#555;}
+ #pic p span:last-child{font-size:16px;}
+ #set>div,#exit{width:100%;height:45px;margin-bottom:1px;background: white;line-height:40px;position: relative;}
+ #set>div:last-child,#exit{margin-bottom:0;}
+ #set>div div{float:left;width:42px;}
+ #set>div div img{height:22px;vertical-align: middle;margin-left:13px;}
+ #set>div:first-child div img{margin-left: 15px;}
+ #set>div:last-child div img{height:18px;margin-left:9px;}
+ #set>div span{vertical-align: sub;font-size: 16px;}
+ #set>div>img{position: absolute;right:10px;top:16px;height:16px;}
+ #exit{text-align: center;line-height: 45px;}
+ #exit span{font-size: 18px;}  
+ 
+/*Tab底栏样式 ↓↓↓ */
+ #tab{height:49px;bottom:0;z-index:3;line-height:16px;}
+ #tab div{position:absolute;top:7px;text-align: center;cursor: pointer;}
+ #tab div:first-child{left:35px;}
+ #tab div:nth-child(2){left:130px;}
+ #tab div:nth-child(3){left:225px;}
+ #tab div:last-child{left:315px;}
+ #tab img{height:20px;}
+ #tab>div:nth-child(3) img{height:16px;margin:2px;}
+ #tab p{font-size: 14px;}
+ #tab>div:first-child p{color:#01a5d4;}
+ 
+/*患者管理页面 ↓↓↓ */
+ #patients .nav{letter-spacing:1px;}
+ #patients .nav a{display:block;position: absolute;width:41px;height:100%;text-align: left;}
+ #patients .nav img{width:10px;vertical-align: middle;margin-left:8px;}
+ #patients .nav img:hover{opacity: 0.7;alpha(opacity=70);}
+ #patients .main{height:602px;}
+ #function{width:100%;height:85px;background: white;border-bottom: 1px solid #e3e3e3;margin-bottom: 10px;}
+ #function li{float:left;width:124px;text-align: center;vertical-align:middle;margin-top:12px;border-right: 1px solid #e3e3e3;}
+ #function li:last-child{border-right: none;}
+ #function li div{height:40px;}
+ #function li img{height:34px;}
+ #function li span{color:#01a5d4;}
+ #care{width:100%;border-top: 1px solid #e3e3e3;height:505px;}
+ #care>div:first-child{width:100%;height:44px;background: white;line-height: 44px;border-bottom: 1px solid #e3e3e3;}
+ #care>div>img{height:16px;margin-left:10px;margin-top:-5px;vertical-align: middle;}
+ #care>div>span{color:#eb6877;margin-left:10px;font-weight: 400px;font-size: 17px;}
+ #patients_list{position: relative;width:100%;height:460px;overflow: hidden;}
+ #patients_list .barParent{height:456px;}
+ #patients_list ul{position: absolute;width:100%;}
+ #patients_list ul>.refresh{top:-35px;}
+ #patients_list ul li{width:100%;height:90px;background: white;border-bottom: 1px solid #e3e3e3;position: relative;}
+ #patients_list ul li>div{float:left;height:100%;}
+ #patients_list ul li>div:first-child{line-height:90px;width:70px;margin-left: 8px;}
+ #patients_list ul li>div img{height:60px;vertical-align: middle;}
+ #patients_list ul li>div:nth-child(2){width:260px;line-height: 40px;}
+ #patients_list ul li>div:nth-child(2)>div{height:43px;margin-top:2px;position:relative;}
+ #patients_list .name{font-size:19px;}
+ #patients_list .hospital_east, #patients_list .hospital_west,#patients_list .hospitalization,#patients_list .outpatient{font-size:13px;font-weight:300;color:white;margin-left:6px;vertical-align:top;}
+ #patients_list .hospital_east,#patients_list .hospital_west{background:#cc292c;border-radius:11px;padding:0 3px;}
+ #patients_list .hospital_west{background:#ffa526;}
+ #patients_list .hospitalization,#patients_list .outpatient{background:#ff808a;border-radius:3px;padding:0 2px;}
+ #patients_list .outpatient{background:#45c3e5;}
+ #patients_list .sex,#patients_list .age{position:absolute;font-size:17px;}
+ #patients_list .sex{left:140px;}
+ #patients_list .age{left:185px;color:#5a5a5a;} 
+ #patients_list .department,#patients_list .description{font-size:15px;width:120px;height:34px;line-height:34px;float:left;}
+ #patients_list .department span,#patients_list .description span{color:#5a5a5a;}
+ #patients_list .description{position:absolute;left:140px;line-height:34px;width:120px;height:auto;}
+
+ #patients_list ul li>img{position: absolute;top:33px;right:15px;height:24px;}
